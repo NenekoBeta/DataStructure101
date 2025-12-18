@@ -44,8 +44,6 @@ int main()
             parent[child] = node;
             q.push(child);
         }
-        
-
     }
     
     
