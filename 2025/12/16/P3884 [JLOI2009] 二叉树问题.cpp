@@ -100,8 +100,8 @@ int main()
     }
 
     // ??? = 2 * (?????) + (?????)
-    // = 2 * distXToLCA + 2 * distYToLCA
-    int distance = 2 * distXToLCA + 2 * distYToLCA;
+    // = 2 * distXToLCA + distYToLCA
+    int distance = 2 * distXToLCA + distYToLCA;
 
     cout << maxDepth << endl;
     cout << maxWidth << endl;
