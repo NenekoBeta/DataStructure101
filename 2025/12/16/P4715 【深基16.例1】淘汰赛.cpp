@@ -65,6 +65,7 @@
 // -------- binary tree simulation --------
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -90,5 +91,83 @@ Node* buildTree(vector<int> teams, vector<int>& powers)
     vector<int> left_teams(teams.begin(), teams.begin() + mid);
     vector<int> right_teams(teams.begin() + mid, teams.end());
 
+    Node* left_subtree = buildTree(left_teams, powers);
+    Node* right_subtree = buildTree(right_teams, powers);
+
+    Node* node = new Node();
     
+    // ?????????
+    if (powers[left_subtree->winner] > powers[right_subtree->winner])
+    {
+        node->winner = left_subtree->winner;
+    }
+    else
+    {
+        node->winner = right_subtree->winner;
+    }
+
+    node->left = left_subtree;
+    node->right = right_subtree;
+
+    return node;
+}
+
+int findRunnerUp(Node* node, int champion, vector<int>& powers)
+{
+    if (node == nullptr)
+    {
+        return -1;
+    }
+
+    if (node->left == nullptr && node->right == nullptr)
+    {
+        // ???????????
+        return -1;
+    }
+
+    int left_winner = node->left->winner;
+    int right_winner = node->right->winner;
+
+    int runner_up = -1;
+
+    if (left_winner == champion)
+    {
+        // ???????????????????
+        runner_up = max(runner_up, right_winner);
+        // ???????????
+        runner_up = max(runner_up, findRunnerUp(node->left, champion, powers));
+    }
+    else
+    {
+        // ???????????????????
+        runner_up = max(runner_up, left_winner);
+        // ???????????
+        runner_up = max(runner_up, findRunnerUp(node->right, champion, powers));
+    }
+
+    return runner_up;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    int total_teams = 1 << n; // 2^n teams
+    vector<int> powers(total_teams); // power of each team
+    vector<int> teams;
+
+    for (int i = 0; i < total_teams; i++)
+    {
+        cin >> powers[i];
+        teams.push_back(i);
+    }
+    
+    Node* root = buildTree(teams, powers);
+    int champion = root->winner;
+    int runner_up = findRunnerUp(root, champion, powers);
+
+    cout << powers[runner_up] << endl;
+
+    return 0;
 }
