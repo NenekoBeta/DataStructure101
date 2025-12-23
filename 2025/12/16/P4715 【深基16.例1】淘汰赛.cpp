@@ -1,63 +1,63 @@
 // -------- recursive function --------
-#include <iostream>
-#include <vector>
+// #include <iostream>
+// #include <vector>
 
-using namespace std;
+// using namespace std;
 
-pair<int, int> tournament(vector<int> teams, vector<int>& powers) {
-    if (teams.size() == 2)
-    {
-        int team1 = teams[0];
-        int team2 = teams[1];
-        if (powers[team1] > powers[team2])
-            return {team1, team2};  // {champion, runner-up}
-        else
-            return {team2, team1};
-    }
+// pair<int, int> tournament(vector<int> teams, vector<int>& powers) {
+//     if (teams.size() == 2)
+//     {
+//         int team1 = teams[0];
+//         int team2 = teams[1];
+//         if (powers[team1] > powers[team2])
+//             return {team1, team2};  // {champion, runner-up}
+//         else
+//             return {team2, team1};
+//     }
     
-    vector<int> left_teams(teams.begin(), teams.begin() + teams.size() / 2);
-    vector<int> right_teams(teams.begin() + teams.size() / 2, teams.end());
+//     vector<int> left_teams(teams.begin(), teams.begin() + teams.size() / 2);
+//     vector<int> right_teams(teams.begin() + teams.size() / 2, teams.end());
 
-    auto [left_champ, left_runner] = tournament(left_teams, powers);
-    auto [right_champ, right_runner] = tournament(right_teams, powers);
+//     auto [left_champ, left_runner] = tournament(left_teams, powers);
+//     auto [right_champ, right_runner] = tournament(right_teams, powers);
 
-    if (powers[left_champ] > powers[right_champ])
-    {
-        int new_runner = right_champ;
-        if (powers[left_runner] > powers[new_runner])
-            new_runner = left_runner;
-        return {left_champ, new_runner};
-    }
-    else
-    {
-        int new_runner = left_champ;
-        if (powers[right_runner] > powers[new_runner])
-            new_runner = right_runner;
-        return {right_champ, new_runner};
-    }
-}
+//     if (powers[left_champ] > powers[right_champ])
+//     {
+//         int new_runner = right_champ;
+//         if (powers[left_runner] > powers[new_runner])
+//             new_runner = left_runner;
+//         return {left_champ, new_runner};
+//     }
+//     else
+//     {
+//         int new_runner = left_champ;
+//         if (powers[right_runner] > powers[new_runner])
+//             new_runner = right_runner;
+//         return {right_champ, new_runner};
+//     }
+// }
 
-int main()
-{
-    int n;
-    cin >> n;
+// int main()
+// {
+//     int n;
+//     cin >> n;
 
-    int total_teams = 1 << n;
-    vector<int> powers(total_teams);
-    vector<int> teams;
+//     int total_teams = 1 << n;
+//     vector<int> powers(total_teams);
+//     vector<int> teams;
 
-    for (int i = 0; i < total_teams; i++)
-    {
-        cin >> powers[i];
-        teams.push_back(i);
-    }
+//     for (int i = 0; i < total_teams; i++)
+//     {
+//         cin >> powers[i];
+//         teams.push_back(i);
+//     }
     
-    auto [champion, runner_up] = tournament(teams, powers);
+//     auto [champion, runner_up] = tournament(teams, powers);
 
-    cout << runner_up + 1 << endl;
+//     cout << runner_up + 1 << endl;
 
-    return 0;
-}
+//     return 0;
+// }
 
 // -------- binary tree simulation --------
 // #include <iostream>
